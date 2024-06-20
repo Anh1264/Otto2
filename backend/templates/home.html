@@ -1,18 +1,71 @@
-{% extends 'base.html' %}
-
-
-{% block head_title %}{{ page_title }} - {{ block.super }}{% endblock head_title %}
-
-
+{% extends 'index.html' %}
+{% load static %}
 {% block content %}
-<h1>{{ page_title }}</h1>
-<p>Hello again!</p>
-
-
-<p>Page visits: {{ page_visit_count }}</p>
-<p>percent: {{ percent }}</p>
-<p>Total visits: {{ total_visit_count }}</p>
-
-
+    <section class="home-section">
+        <div class="home-text-container">
+            <h1>Manage Waste</h1>
+            <h1>Manage Environment.</h1>
+            <p>Save your time,</p>
+            <p>Sort waste with our AI robot.</p>
+            <div class="trigger-btn-container">
+                <a href='#about-otto'><button class="trigger-btn">Get Started</button></a>
+            </div>
+        </div>
+        <div class="home-img-container">
+            <img src="{% static 'img/logo.jpg' %}">
+        </div>
+    </section>
+    <section class="about-otto-section" id="about-otto">
+        <div class="title">About Otto</div>
+        <div class="about-otto-cards-container">
+            <div class="feature-card">
+                <h2>Knowledge</h2>
+                <div class="card-img-container">
+                    <img src="{% static 'img/logo.jpg' %}">
+                </div>
+                <div class="paragraph-container">
+                    <p>This is a piece of text describing the feature.This is a piece of text describing the feature.</p>
+                </div>
+                <button class="trigger-btn">Learn More</button>
+            </div>
+            <div class="feature-card">
+                <h2>Encourage</h2>
+                <div class="card-img-container">
+                    <img src="{% static 'img/logo.jpg' %}">
+                </div>
+                <div class="paragraph-container">
+                    <p>This is a piece of text describing the feature.This is a piece of text describing the feature.</p>
+                </div>
+                <button class="trigger-btn">Learn More</button>
+            </div>
+            <div class="feature-card">
+                <h2>Contribution</h2>
+                <div class="card-img-container">
+                    <img src="{% static 'img/logo.jpg' %}">
+                </div>
+                <div class="paragraph-container">
+                    <p>This is a piece of text describing the feature more.This is a piece of text describing the feature.</p>
+                </div>
+                <button class="trigger-btn">Learn More</button>
+            </div>
+        </div>
+    </section>
+    <section class="models-section" id="models">
+        <div class="title">Models</div>
+        <div class="models-content-container">
+            <div class="models-img-container">
+                <img src="{% static 'img/logo.jpg' %}">
+            </div>
+            <div class="models-text-container">
+                <h1>Otto Models</h1>
+                <!-- <h1>Provide data.</h1> -->
+                <p>Provide collections of data,</p>
+                <p>And help you take control of your surroundings.</p>
+                <div class="trigger-btn-container">
+                    <a href="{% url 'ottos' %}"><button class="trigger-btn">View Ottos</button></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="{% static 'js/script.js' %}"></script>
 {% endblock content %}
-

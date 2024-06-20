@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+    <section class="ottos-section" id="ottos">
+        <div class="ottos-sidebar-container">
+            <div class="search-bar-container">
+                <button>This is the input field</button>
+            </div>
+            <div class="location-list-container">
+                <h3>This is a location</h3>
+                <h3>This is a location</h3>
+                <h3>This is a location</h3>
+                <h3>This is a location</h3>
+            </div>
+        </div>
+        <div class="ottos-list-container">
+            {% for robot in robots %}
+                <div class="otto-box">
+                    <div class="otto-img-container">
+                        <img src="{% static 'img/logo.jpg' %}">
+                    </div>
+                    <div class="otto-text-container">
+                        <h1>{{robot.name}}</h1>
+                        <p>{{robot.location}}</p>
+                    </div>
+                    <div class="otto-box-more-content">
+                        <div class="more-content-text-container">
+                            <p>This is more text appeard when hover the box.</p>
+                        </div>
+                        <div class="trigger-btn-container">
+                            <button class="trigger-btn"></button>
+                        </div>
+                    </div>
+                    <div class="trigger-btn-container">
+                        <a href="{% url 'view-activity-list' robot.robot_id %}"><button class="trigger-btn">See Activity</button></a>
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- <div class="otto-box">
+                <div class="otto-img-container">
+                    <img src="{% static 'img/logo.jpg' %}">
+                </div>
+                <h1>Name2</h1>
+            </div>
+            <div class="otto-box">
+                <div class="otto-img-container">
+                    <img src="{% static 'img/logo.jpg' %}">
+                </div>
+                <h1>Name3</h1>
+            </div>
+            <div class="otto-box">
+                <div class="otto-img-container">
+                    <img src="{% static 'img/logo.jpg' %}">
+                </div>
+                <h1>Name4</h1>
+            </div> -->
+        </div>
+    </section>
+
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+    <section class="activity-list-section" id="activity-list">
+        <div class="activity-list-important-content-container">
+            <div class="activity-list-img-container">
+                <h1>{{robot.name}} - {{robot.location}}</h1>
+                <img src="{% static 'img/logo.jpg' %}">
+                <p>Type: {{robot.type}}</p>
+            </div>
+            <div class="acitivity-list-important-data-container">
+                <h1>Totoal Active Time</h1>
+                <p>Total Scan</p>
+            </div>
+        </div>
+        <div class="activity-visualization-container">
+            <h1>Some graph</h1>
+            {% for activity in robot_activities %}
+                <p>{{activity}}</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock content %}
