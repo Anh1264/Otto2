@@ -5,7 +5,7 @@ def homePage(request):
     return render(request, 'home.html')
 
 def ottosPage(request):
-    endpoint = 'http://127.0.0.1:8000/robot/'
+    endpoint = 'https://otto2-production.up.railway.app/ottos/'
     get_response = requests.get(endpoint)
     robots = get_response.json()
 
