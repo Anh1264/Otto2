@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'activity.apps.ActivityConfig',
     'robot.apps.RobotConfig',
     'picture.apps.PictureConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
