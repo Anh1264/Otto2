@@ -12,7 +12,7 @@ class Activity(models.Model):
     cam = models.IntegerField(null=False, blank=False, default=0)
     
     def __str__(self):
-        return f'Activity-{self.id} from {self.robot_id}'
+        return f'Activity-{self.activity_id} from {self.robot_id}'
     
 
     

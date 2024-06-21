@@ -1,13 +1,13 @@
 from django.shortcuts import render
 import requests
+from robot.models import Robot
+from activity.models import Activity
 # Create your views here.
 def homePage(request):
     return render(request, 'home.html')
 
 def ottosPage(request):
-    endpoint = 'https://otto2-production.up.railway.app/ottos/'
-    get_response = requests.get(endpoint)
-    robots = get_response.json()
+    robots = Robot.objects.all()
 
 
     context = {'robots': robots}
@@ -15,15 +15,10 @@ def ottosPage(request):
 
 def activityListPage(request,robot_id):
     # get robot's activities
-    endpoint = f'http://127.0.0.1:8000/activity/robot_activities/{robot_id}/'
-    get_response = requests.get(endpoint)
-    robot_activities = get_response.json()
+    robot_activities = Activity.objects.filter(robot_id=robot_id)
     # get robot
 
-    endpoint = f'http://127.0.0.1:8000/robot/{robot_id}/'
-    get_response = requests.get(endpoint)
-    robot = get_response.json()
-    print(robot)
+    robot = Robot.objects.get_or_create(robot_id=robot_id)
 
     context = {'robot_activities': robot_activities, 'robot': robot}
     return render(request, 'activityList.html', context)
