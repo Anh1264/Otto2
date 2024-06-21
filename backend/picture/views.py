@@ -10,9 +10,23 @@ from .models import Picture
 from .service import *
 import base64
 from io import BytesIO
-class PictureCreateAPIView(generics.GenericAPIView, mixins.CreateModelMixin):
+class PictureMixinView(
+    generics.GenericAPIView, 
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    ):
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer
+    lookup_field = "picture_id"
+
+    def get(self, request, *args, **kwargs):
+        picture_id = kwargs.get('picture_id')
+        if picture_id is not None:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         print(*args, **kwargs)
@@ -29,7 +43,7 @@ class PictureCreateAPIView(generics.GenericAPIView, mixins.CreateModelMixin):
             inference_ms = get_inference_ms(file_name_parts)
             print(type(inference_ms))
             request.data['inference_ms'] = inference_ms
-            file_path = 'picture/image/headphones.png'
+            file_path = f'picture/image/{file_name}'
             file_data = request.data['file_data']
             save_base64_image(file_data, file_path)
             '''
@@ -49,7 +63,7 @@ class PictureCreateAPIView(generics.GenericAPIView, mixins.CreateModelMixin):
             '''
             # base_64_string = request.data.get('file_data')
             # file_name = request.data.get('file_name')
-            robot_id = request.data.get('robot')
+            robot_id = request.data.get('robot_id')
             print('robot id:', robot_id)
             # base_64_bytes = base_64_string.encode('utf-8')
             # image_data = base64.b64decode(base_64_bytes)
@@ -67,3 +81,9 @@ class PictureCreateAPIView(generics.GenericAPIView, mixins.CreateModelMixin):
 
     def perform_create(self, serializer):
         return serializer.save()
+    
+    def put(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
