@@ -2,7 +2,8 @@
 # from google.oauth2.credentials import Credentials
 # from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
+# from googleapiclient.http import MediaFileUpload
+from googleapiclient.http import MediaIoBaseUpload
 from google.oauth2 import service_account
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
 SERVICE_ACCOUNT_FILE = 'credentials.json'
@@ -12,7 +13,7 @@ def get_drive_service():
     service = build('drive', 'v3', credentials=creds)
     return service
 
-def upload_file_to_drive(file_data, file_name, folder_name):
+def upload_file_to_drive(file_io, file_name, folder_name):
     service = get_drive_service()
     folder_id = get_or_create_folder(service, folder_name)
     query = f"name='{file_name}' and '{folder_id}' in parents and trashed=false"
@@ -24,7 +25,7 @@ def upload_file_to_drive(file_data, file_name, folder_name):
         file_id = items[0]['id']
         return f"https://drive.google.com/uc?id={file_id}"
     file_metadata = {'name': file_name, 'parents': folder_id, }
-    media = MediaFileUpload(file_data, mimetype='image/jpeg', resumable=True)
+    media = MediaIoBaseUpload(file_io, mimetype='image/jpeg', resumable=True)
     file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
     file_id = file.get('id')
     print('file_id:' ,file_id)

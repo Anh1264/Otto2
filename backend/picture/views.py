@@ -43,9 +43,9 @@ class PictureMixinView(
             inference_ms = get_inference_ms(file_name_parts)
             print(type(inference_ms))
             request.data['inference_ms'] = inference_ms
-            file_path = f'picture/image/{file_name}'
-            file_data = request.data['file_data']
-            save_base64_image(file_data, file_path)
+            # file_path = f'picture/image/{file_name}'
+            # file_data = request.data['file_data']
+            # save_base64_image(file_data, file_path)
             '''
             Real situation !!!!
             - Extract the base64 string from request.data
@@ -61,16 +61,13 @@ class PictureMixinView(
             - note that this serializer does not take account of posting the same image
                 because that will be likely to never happen
             '''
-            # base_64_string = request.data.get('file_data')
-            # file_name = request.data.get('file_name')
+            base_64_string = request.data.get('file_data')
+            file_name = request.data.get('file_name')
             robot_id = request.data.get('robot_id')
             print('robot id:', robot_id)
-            # base_64_bytes = base_64_string.encode('utf-8')
-            # image_data = base64.b64decode(base_64_bytes)
-            # file_data = BytesIO(image_data)
-            # file_data.seek(0)
+            
 
-            drive_link = get_drive_link(file_path, file_name, robot_id)
+            drive_link = get_drive_link(base_64_string, file_name, robot_id)
             print('Drive Link:' ,drive_link)
             request.data['url'] = drive_link
             return self.create(request, *args, **kwargs)

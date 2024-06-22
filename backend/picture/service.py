@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import math
 import base64
+import io
 from .google_drive import upload_file_to_drive
 def parts_file_name(file_name):
     file_name = file_name[0:file_name.index('.')]
@@ -31,8 +32,10 @@ def get_inference_ms(file_name_parts):
     inference_ms = timedelta(milliseconds=ms)
     return inference_ms
 
-def get_drive_link(file_data, file_name, folder_name):
-    link = upload_file_to_drive(file_data, file_name, folder_name)
+def get_drive_link(base_64_string, file_name, folder_name):
+    file_data = base64.b64decode(base_64_string)
+    file_io = io.BytesIO(file_data)
+    link = upload_file_to_drive(file_io, file_name, folder_name)
     print('link:', link)
     return link
 
