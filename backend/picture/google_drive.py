@@ -1,15 +1,15 @@
-# from google.auth.transport.requests import Request
-# from google.oauth2.credentials import Credentials
-# from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-# from googleapiclient.http import MediaFileUpload
 from googleapiclient.http import MediaIoBaseUpload
 from google.oauth2 import service_account
-SCOPES = ['https://www.googleapis.com/auth/drive.file']
-SERVICE_ACCOUNT_FILE = 'credentials.json'
+from decouple import config
+import json
+import base64
+
+# SCOPES = ['https://www.googleapis.com/auth/drive.file']
 def get_drive_service():
     """Authenticate and return the Google Drive API service."""
-    creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    creds = get_credentials_from_env()
+    print("Creds:", creds)
     service = build('drive', 'v3', credentials=creds)
     return service
 
@@ -58,3 +58,18 @@ def get_or_create_folder(service, folder_name):
         folder = service.files().create(body=file_metadata, fields='id').execute()
         print('Folder id:', folder['id'])
         return folder['id']
+    
+
+def get_credentials_from_env():
+    print("Getting creds")
+    encoded_creds = config('GOOGLE_CREDENTIALS_KEY')
+    if not encoded_creds:
+        raise ValueError("No GOOGLE_CREDENTIALS_KEY environment variable set")
+    encoded_creds = str(encoded_creds)[2:]
+    encoded_creds += "=="
+    # print("encoded creds:", encoded_creds, "length:", len(encoded_creds))
+    decoded_creds = json.loads(base64.b64decode(encoded_creds).decode('utf-8'))
+    # print("Decoded creds:",decoded_creds)
+    print("Load successful")
+    credentials = service_account.Credentials.from_service_account_info(decoded_creds)
+    return credentials    
