@@ -165,3 +165,8 @@ cython_debug/
 .history
 backend/client
 credentials.json
+vendors
+
+
+#ignore local staticfiles root
+local-cdn

@@ -7,11 +7,14 @@
     <title>Base</title>
     <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
     <link rel="stylesheet" href="{% static 'styles/mediaqueries.css' %}">
+    {% include 'base/css.html' %}
 </head>
 <body>
-    {% include 'navbar.html' %}
+    <!-- {% include 'navbar.html' %} -->
+    {% include 'nav/testnav.html' %}
     {% block content %}
 
     {% endblock content %}
+    {% include 'base/js.html' %}
 </body>
 </html>

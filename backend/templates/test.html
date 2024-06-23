@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+{% block content %}
+
+    <h1>Test page</h1>
+    {% for robot in robots %}
+        <p>{{robot.name}}</p>
+    {% endfor %}
+
+{% endblock content %}

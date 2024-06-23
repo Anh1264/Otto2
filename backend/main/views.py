@@ -3,15 +3,24 @@ import requests
 from robot.models import Robot
 from activity.models import Activity
 # Create your views here.
-def homePage(request):
-    return render(request, 'home.html')
 
-def ottosPage(request):
+def testPage(request):
     robots = Robot.objects.all()
 
+    context = {'robots': robots}
+    return render(request, 'test.html', context)
 
+def homePage(request):
+    robots = Robot.objects.all()
     context = {'robots': robots}
     return render(request, 'ottos.html', context)
+
+# def ottosPage(request):
+#     robots = Robot.objects.all()
+
+
+#     context = {'robots': robots}
+#     return render(request, 'ottos.html', context)
 
 def activityListPage(request,robot_id):
     # get robot's activities
